@@ -182,7 +182,7 @@ namespace NephriteRunner.Runtime
 
         public object VisitIfStatement(If @if)
         {
-            if (IsTruthy(@if.Condition))
+            if (IsTruthy(Evaluate(@if.Condition)))
                 Execute(@if.ThenBranch);
 
             else if (@if.ElseBranch != null)
@@ -250,12 +250,12 @@ namespace NephriteRunner.Runtime
         private void Execute(Statement statement)
             => statement.Accept(this);
 
-        private bool IsTruthy(object @object)
+        private bool IsTruthy(object value)
         {
-            if (@object == null)
+            if (value == null)
                 return false;
 
-            else return @object is bool ? (bool)@object : true;
+            return value is bool ? (bool)value : true;
         }
 
         private bool IsEqual(object left, object right)
