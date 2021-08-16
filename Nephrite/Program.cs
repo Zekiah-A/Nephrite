@@ -23,13 +23,16 @@ namespace NephriteRunner
 
             else if (args.Length == 0)
             {
+                Console.WriteLine("You have entered the nephrite REPL. Enter a command to run it.\n");
+
                 while (true)
                 {
+                    Console.Write(">> ");
                     var input = Console.ReadLine();
 
                     if (!string.IsNullOrEmpty(input))
                         new NephriteRunner().Run(input);
-
+                    
                     else
                         break;
                 }

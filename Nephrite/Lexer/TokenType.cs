@@ -17,7 +17,7 @@
 
         // Keywords.
         And, Class, Else, False, Fun, For, If, Null, Or,
-        WriteLine, Return, Super, This, True, Var, While,
+        WriteLine, Return, Super, This, True, Var, While, Exit,
 
         EndOfFile
     }

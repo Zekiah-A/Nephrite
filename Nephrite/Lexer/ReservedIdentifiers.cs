@@ -22,7 +22,8 @@ namespace NephriteRunner.Lexer
                 { "this", TokenType.This },
                 { "true", TokenType.True },
                 { "var", TokenType.Var },
-                { "while", TokenType.While }
+                { "while", TokenType.While },
+                { "exit", TokenType.Exit }
             };
 
         public static readonly IReadOnlyDictionary<char, TokenType> SingleCharacters =

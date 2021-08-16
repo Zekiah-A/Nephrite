@@ -62,6 +62,8 @@ namespace NephriteRunner.SyntaxAnalysis
         {
             if (Match(TokenType.WriteLine))
                 return WriteStatement();
+            else if (Match(TokenType.Exit))
+                return ExitStatement();
 
             else if (Match(TokenType.If))
                 return IfStatement();
@@ -81,6 +83,13 @@ namespace NephriteRunner.SyntaxAnalysis
             var value = Expression();
             Consume(TokenType.Semicolon, "Expected ';' after value");
             return new WriteLine(value);
+        }
+
+        private Statement ExitStatement()
+        {
+            var value = Expression();
+            Consume(TokenType.Semicolon, "Expected ';' after exit code");
+            return new Exit(value);
         }
 
         private Statement IfStatement()

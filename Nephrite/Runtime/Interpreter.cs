@@ -207,6 +207,20 @@ namespace NephriteRunner.Runtime
             return writeLine;
         }
 
+        public object VisitExitStatement(Exit exit)
+        {
+           var value = Evaluate(exit.Expression);
+
+            if (value is null)
+                Environment.Exit(0);
+            else if (value is double || value is bool)
+                Environment.Exit(Convert.ToInt32(value));
+            else
+                throw new RuntimeErrorException("Statement 'exit' requires 'int' exit code.");
+            
+            return exit;
+        }
+
         public object VisitStatementExpression(StatementExpression statementExpression)
         {
             Evaluate(statementExpression.Expression);
