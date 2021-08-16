@@ -18,6 +18,8 @@ namespace NephriteRunner.SyntaxAnalysis
 
         T VisitWriteStatement(WriteLine writeLine);
 
+        T VisitExitStatement(Exit exit);
+
         T VisitVarStatement(Var var);
 
         T VisitWhileStatement(While @while);
@@ -45,6 +47,12 @@ namespace NephriteRunner.SyntaxAnalysis
     {
         public override T Accept<T>(IStatementVisitor<T> visitor)
             => visitor.VisitWriteStatement(this);
+    }
+
+    internal record Exit(Expression Expression) : Statement
+    {
+        public override T Accept<T>(IStatementVisitor<T> visitor)
+            => visitor.VisitExitStatement(this);
     }
 
     internal record Var(Token Name, Expression? Initializer) : Statement

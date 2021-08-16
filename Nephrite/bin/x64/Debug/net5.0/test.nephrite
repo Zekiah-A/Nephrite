@@ -1,0 +1,13 @@
+var e = 101;
+
+while (true)
+{
+	e = e + 1;
+	writeLine e;
+
+	if (e == 110)
+	{
+		writeLine "finished counting!";
+		exit 1;
+	}
+}

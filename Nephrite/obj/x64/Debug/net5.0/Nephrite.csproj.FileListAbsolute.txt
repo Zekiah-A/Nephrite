@@ -1,0 +1,16 @@
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.exe
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.deps.json
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.runtimeconfig.json
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.runtimeconfig.dev.json
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.dll
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\ref\Nephrite.dll
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\bin\x64\Debug\net5.0\Nephrite.pdb
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.AssemblyInfoInputs.cache
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.AssemblyInfo.cs
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.csproj.CoreCompileInputs.cache
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.dll
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\ref\Nephrite.dll
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.pdb
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.genruntimeconfig.cache
+C:\Users\Lorraine\Downloads\Nephrite-master\Nephrite-master\Nephrite\obj\x64\Debug\net5.0\Nephrite.csprojAssemblyReference.cache
