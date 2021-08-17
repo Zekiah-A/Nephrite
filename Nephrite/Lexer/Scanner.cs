@@ -143,7 +143,16 @@ namespace NephriteRunner.Lexer
                         AddToken(TokenType.Slash);
                         break;
                     }
-
+                case '%':
+                    if (Match('%'))
+                    {
+                        while (Peek() != '\n' && !IsAtEnd())
+                            Advance();
+                            
+                        break;
+                    }
+                    AddToken(TokenType.Modulo);
+                    break;
                 default:
                     {
                         if (ReservedIdentifiers.SingleCharacters.TryGetValue(character, out var characterType))

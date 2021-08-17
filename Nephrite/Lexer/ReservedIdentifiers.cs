@@ -38,7 +38,8 @@ namespace NephriteRunner.Lexer
                 { '-', TokenType.Minus },
                 { '+', TokenType.Plus },
                 { ';', TokenType.Semicolon },
-                { '*', TokenType.Star }
+                { '*', TokenType.Star },
+                { '%', TokenType.Modulo }
             };
     }
 }
