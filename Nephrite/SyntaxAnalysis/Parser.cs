@@ -60,8 +60,10 @@ namespace NephriteRunner.SyntaxAnalysis
 
         private Statement Statement()
         {
-            if (Match(TokenType.WriteLine))
+            if (Match(TokenType.Write))
                 return WriteStatement();
+            else if (Match(TokenType.WriteLine))
+                return WriteLineStatement();
             else if (Match(TokenType.Exit))
                 return ExitStatement();
 
@@ -79,6 +81,13 @@ namespace NephriteRunner.SyntaxAnalysis
         }
 
         private Statement WriteStatement()
+        {
+            var value = Expression();
+            Consume(TokenType.Semicolon, "Expected ';' after value");
+            return new Write(value);
+        }
+
+        private Statement WriteLineStatement()
         {
             var value = Expression();
             Consume(TokenType.Semicolon, "Expected ';' after value");

@@ -16,6 +16,7 @@ namespace NephriteRunner.Lexer
                 { "if", TokenType.If },
                 { "null", TokenType.Null },
                 { "or", TokenType.Or },
+                { "write", TokenType.Write },
                 { "writeLine", TokenType.WriteLine},
                 { "return", TokenType.Return },
                 { "super", TokenType.Super },
