@@ -25,7 +25,7 @@ namespace NephriteRunner
 
             else if (args.Length == 0)
             {
-                Console.Write($"You have entered the nephrite REPL. Enter a command to run it.\nUse ");
+                Console.Write($"You have entered the Nephrite REPL. Enter a command to run it.\nUse ");
                 WriteConsoleColour(ConsoleColor.DarkCyan, "ctrl + c");
                 Console.Write(" or ");
                 WriteConsoleColour(ConsoleColor.DarkCyan, "exit 0;");
