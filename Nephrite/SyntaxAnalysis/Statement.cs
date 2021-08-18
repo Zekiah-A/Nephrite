@@ -16,7 +16,9 @@ namespace NephriteRunner.SyntaxAnalysis
 
         T VisitIfStatement(If @if);
 
-        T VisitWriteStatement(WriteLine writeLine);
+        T VisitWriteStatement(Write write);
+
+        T VisitWriteLineStatement(WriteLine writeLine);
 
         T VisitExitStatement(Exit exit);
 
@@ -43,10 +45,17 @@ namespace NephriteRunner.SyntaxAnalysis
             => visitor.VisitIfStatement(this);
     }
 
-    internal record WriteLine(Expression Expression) : Statement
+    internal record Write(Expression Expression) : Statement
     {
         public override T Accept<T>(IStatementVisitor<T> visitor)
             => visitor.VisitWriteStatement(this);
+
+    }
+
+    internal record WriteLine(Expression Expression) : Statement
+    {
+        public override T Accept<T>(IStatementVisitor<T> visitor)
+            => visitor.VisitWriteLineStatement(this);
     }
 
     internal record Exit(Expression Expression) : Statement

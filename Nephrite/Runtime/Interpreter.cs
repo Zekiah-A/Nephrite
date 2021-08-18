@@ -198,7 +198,23 @@ namespace NephriteRunner.Runtime
             return @if;
         }
 
-        public object VisitWriteStatement(WriteLine writeLine)
+        public object VisitWriteStatement(Write write)
+        {
+            var value = Evaluate(write.Expression);
+
+            if (value is null)
+                Console.Write("null");
+
+            else if (value is double)
+                Console.Write(value.ToString());
+
+            else
+                Console.Write(value);
+
+            return write;
+        }
+
+        public object VisitWriteLineStatement(WriteLine writeLine)
         {
             var value = Evaluate(writeLine.Expression);
 
