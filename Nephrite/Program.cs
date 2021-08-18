@@ -23,7 +23,11 @@ namespace NephriteRunner
 
             else if (args.Length == 0)
             {
-                Console.WriteLine("You have entered the nephrite REPL. Enter a command to run it.\n");
+                Console.Write($"You have entered the nephrite REPL. Enter a command to run it.\nUse ");
+                WriteConsoleColour(ConsoleColor.DarkCyan, "ctrl + c");
+                Console.Write(" or "); 
+                WriteConsoleColour(ConsoleColor.DarkCyan, "exit 0;");
+                Console.Write(" to quit the repl.\n\n");
 
                 while (true)
                 {
@@ -41,6 +45,15 @@ namespace NephriteRunner
             else
                 nephrite.ReportError("Usage: Press enter to start the REPL. Or write the file path to run it.");
 
+        }
+
+        public static string WriteConsoleColour(ConsoleColor colour, string text)
+        {
+            ConsoleColor originalcolour = Console.ForegroundColor;
+            Console.ForegroundColor = colour;
+            Console.Write(text);
+            Console.ForegroundColor = originalcolour;
+            return null;
         }
     }
 }

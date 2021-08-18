@@ -77,6 +77,9 @@ namespace NephriteRunner.Lexer
                     AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater);
                     break;
 
+                case '%': AddToken(TokenType.Modulo); 
+                    break;
+
                 case >= '0' and <= '9':
                     {
                         while (char.IsDigit(Peek()))
@@ -143,7 +146,7 @@ namespace NephriteRunner.Lexer
                         AddToken(TokenType.Slash);
                         break;
                     }
-
+                    
                 default:
                     {
                         if (ReservedIdentifiers.SingleCharacters.TryGetValue(character, out var characterType))

@@ -233,7 +233,7 @@ namespace NephriteRunner.SyntaxAnalysis
         {
             var expression = Unary();
 
-            while (Match(TokenType.Slash, TokenType.Star))
+            while (Match(TokenType.Slash, TokenType.Star, TokenType.Modulo))
             {
                 var @operator = Previous();
                 var right = Unary();
@@ -298,7 +298,6 @@ namespace NephriteRunner.SyntaxAnalysis
                     return true;
                 }
             }
-
             return false;
         }
 

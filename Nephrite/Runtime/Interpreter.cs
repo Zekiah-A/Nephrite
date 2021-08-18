@@ -115,6 +115,13 @@ namespace NephriteRunner.Runtime
 
                         throw new RuntimeErrorException("Operands must be two numbers or two strings.");
                     }
+                case TokenType.Modulo:
+                    if (left is double && right is double)
+                        return (double) left % (double) right;
+                    if (left is string && right is string)
+                        return Int32.Parse((string)left) % Int32.Parse((string)right);
+                    else
+                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
             }
 
             throw new RuntimeErrorException("Unknown operator.");
