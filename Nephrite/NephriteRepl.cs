@@ -26,7 +26,7 @@ public class NephriteRepl
                 case ConsoleKey.Backspace:
                     Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                     if (input?.Length < 1) continue;
-                    input = input[..^1];
+                    input = input?[..^1];
                     Console.Write("\b \b");
                     continue;
                 case ConsoleKey.UpArrow:
