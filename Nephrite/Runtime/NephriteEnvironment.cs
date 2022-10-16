@@ -22,6 +22,9 @@ internal class NephriteEnvironment
     public void Define(Token token, object? value)
         => values.Add(token.Value!.ToString()!, value);
 
+    public void Delete(Token token)
+        => values.Remove(token.Value?.ToString()!);
+
     public object? Get(Token name)
     {
         if (name.Value is not null)

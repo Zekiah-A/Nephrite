@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Text;
 using Nephrite.Exceptions;
 using Nephrite.Lexer;
 using Nephrite.SyntaxAnalysis;
@@ -229,12 +230,17 @@ namespace Nephrite.Runtime
         {
            var value = Evaluate(exit.Expression);
 
-            if (value is null)
-                Environment.Exit(0);
-            else if (value is double or bool)
-                Environment.Exit(Convert.ToInt32(value));
-            else
-                throw new RuntimeErrorException("Statement 'exit' requires 'int' exit code.");
+            switch (value)
+            {
+                case null:
+                    Environment.Exit(0);
+                    break;
+                case double or bool:
+                    Environment.Exit(Convert.ToInt32(value));
+                    break;
+                default:
+                    throw new RuntimeErrorException("Statement 'exit' requires 'int' exit code.");
+            }
             
             return exit;
         }
@@ -261,6 +267,24 @@ namespace Nephrite.Runtime
                 Execute(@while.Body);
 
             return @while;
+        }
+
+        public object VisitFreeStatement(Free free)
+        {
+            environment.Delete(free.Name);
+            return free;
+        }
+
+        public object VisitObjectDumpStatement(ObjectDump objectDump)
+        {
+            var props = objectDump.Expression.GetType().GetProperties();
+            var sb = new StringBuilder();
+            foreach (var p in props)
+            {
+                sb.AppendLine(p.Name + ": " + p.GetValue(objectDump.Expression, null));
+            }
+            Console.WriteLine(sb);
+            return objectDump;
         }
 
         private void ExecuteBlock(List<Statement> statements, NephriteEnvironment environment)
