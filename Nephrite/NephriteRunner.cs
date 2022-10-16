@@ -1,80 +1,36 @@
-﻿using NephriteRunner.Exceptions;
-using NephriteRunner.Lexer;
-using NephriteRunner.Runtime;
-using NephriteRunner.SyntaxAnalysis;
-using System;
-using System.IO;
+﻿using Nephrite.Exceptions;
+using Nephrite.Lexer;
+using Nephrite.Runtime;
+using Nephrite.SyntaxAnalysis;
 
-namespace NephriteRunner
+public class NephriteRunner
 {
-    public class NephriteRunner
+    private readonly Interpreter interpreter = new();
+    
+    public Task Execute(string source)
     {
-        public void Run(string[] args)
+        try
         {
-            if (args.Length == 1)
-            {
-                try
-                {
-                    Execute(File.ReadAllText(args[0]));
-                }
-                catch (IOException)
-                {
-                    ReportError($"Couldn't open the file. ({args[0]})");
-                }
-            }
+            var tokens = new Scanner(source).Run();
+            var statements = new Parser(tokens).Run();
 
-            else if (args.Length == 0)
-            {
-                Console.Write($"You have entered the Nephrite REPL. Enter a command to run it.\nUse ");
-                WriteConsoleColour(ConsoleColor.DarkCyan, "ctrl + c");
-                Console.Write(" or ");
-                WriteConsoleColour(ConsoleColor.DarkCyan, "exit 0;");
-                Console.Write(" to quit the repl.\n\n");
-
-                while (true)
-                {
-                    Console.Write(">> ");
-                    var input = Console.ReadLine();
-
-                    if (!string.IsNullOrEmpty(input))
-                        Execute(input);
-
-                    else
-                        break;
-
-                    Console.WriteLine();
-                }
-
-            }
-
-            else
-                ReportError("Usage: Press enter to start the REPL. Or write the file path to run it.");
-
+            interpreter.Run(statements);
+        }
+        catch (Exception error) when (error is ScanningErrorException || error is ParsingErrorException || error is RuntimeErrorException)
+        {
+            ReportError(error.StackTrace == null ? error.Message : $"{error.Message}\n{error.StackTrace}");
         }
 
-        private void Execute(string source)
-        {
-            try
-            {
-                var tokens = new Scanner(source).Run();
-                var statements = new Parser(tokens).Run();
+        return Task.CompletedTask;
+    }
 
-                new Interpreter().Run(statements);
-            }
-            catch (Exception error) when (error is ScanningErrorException || error is ParsingErrorException || error is RuntimeErrorException)
-            {
-                ReportError(error.StackTrace == null ? error.Message : $"{error.Message}\n{error.StackTrace}");
-            }
-        }
+    private void ReportError(string message)
+        => WriteConsoleColour(ConsoleColor.Red, message);
 
-        private void ReportError(string message)
-            => WriteConsoleColour(ConsoleColor.Red, message);
-
-        private static void WriteConsoleColour(ConsoleColor colour, string text)
-        {
-            Console.ForegroundColor = colour;
-            Console.Write(text);
-            Console.ResetColor();
-        }
+    private static void WriteConsoleColour(ConsoleColor colour, string text)
+    {
+        Console.ForegroundColor = colour;
+        Console.Write(text);
+        Console.ResetColor();
     }
 }

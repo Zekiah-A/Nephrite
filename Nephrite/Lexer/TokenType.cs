@@ -1,4 +1,4 @@
-﻿namespace NephriteRunner.Lexer
+﻿namespace Nephrite.Lexer
 {
     internal enum TokenType
     {

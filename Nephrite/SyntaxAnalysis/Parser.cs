@@ -1,10 +1,10 @@
-﻿using NephriteRunner.Exceptions;
-using NephriteRunner.Lexer;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Nephrite.Exceptions;
+using Nephrite.Lexer;
 
-namespace NephriteRunner.SyntaxAnalysis
+namespace Nephrite.SyntaxAnalysis
 {
     internal class Parser
     {
@@ -33,14 +33,7 @@ namespace NephriteRunner.SyntaxAnalysis
 
         private Statement? Declaration()
         {
-            try
-            {
-                return Match(TokenType.Var) ? VarDeclaration() : Statement();
-            }
-            catch (ParsingErrorException)
-            {
-                throw;
-            }
+            return Match(TokenType.Var) ? VarDeclaration() : Statement();
         }
 
         private Statement VarDeclaration()

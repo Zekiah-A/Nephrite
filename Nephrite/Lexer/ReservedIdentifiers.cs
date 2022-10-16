@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NephriteRunner.Lexer
+namespace Nephrite.Lexer
 {
     internal static class ReservedIdentifiers
     {
