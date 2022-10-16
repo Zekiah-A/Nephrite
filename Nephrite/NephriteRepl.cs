@@ -25,7 +25,8 @@ public class NephriteRepl
             {
                 case ConsoleKey.Backspace:
                     Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                    input?.Remove(input.Length - 1);
+                    if (input?.Length < 1) continue;
+                    input = input[..^1];
                     Console.Write("\b \b");
                     continue;
                 case ConsoleKey.UpArrow:
@@ -40,7 +41,7 @@ public class NephriteRepl
                     break;
             }
 
-            input += key.KeyChar;
+            input += key.KeyChar.ToString();
             if (key.Key != ConsoleKey.Enter) continue;
             
             Console.WriteLine();
