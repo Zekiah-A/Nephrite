@@ -1,8 +1,8 @@
-﻿using NephriteRunner.Exceptions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using Nephrite.Exceptions;
 
-namespace NephriteRunner.Lexer
+namespace Nephrite.Lexer
 {
     internal class Scanner
     {
@@ -104,11 +104,10 @@ namespace NephriteRunner.Lexer
 
                         var identifier = source[start..current];
 
-                        if (ReservedIdentifiers.Keywords.TryGetValue(identifier, out var identifierType))
-                            AddToken(identifierType, identifier);
-
-                        else
-                            AddToken(TokenType.Identifier, identifier);
+                        AddToken(
+                            ReservedIdentifiers.Keywords.TryGetValue(identifier, out var identifierType)
+                                ? identifierType
+                                : TokenType.Identifier, identifier);
                         break;
                     }
 

@@ -1,11 +1,11 @@
-﻿using NephriteRunner.Exceptions;
-using NephriteRunner.Lexer;
-using NephriteRunner.SyntaxAnalysis;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Nephrite.Exceptions;
+using Nephrite.Lexer;
+using Nephrite.SyntaxAnalysis;
 
-namespace NephriteRunner.Runtime
+namespace Nephrite.Runtime
 {
     internal class Interpreter : IExpressionVisitor<object>, IStatementVisitor<object>
     {
@@ -18,15 +18,8 @@ namespace NephriteRunner.Runtime
 
         public void Run(ImmutableArray<Statement> statements)
         {
-            try
-            {
-                foreach (Statement statement in statements)
-                    Execute(statement);
-            }
-            catch (RuntimeErrorException)
-            {
-                throw;
-            }
+            foreach (var statement in statements)
+                Execute(statement);
         }
 
         public object VisitBinaryExpression(Binary binary)
@@ -37,16 +30,14 @@ namespace NephriteRunner.Runtime
             switch (binary.Operator.Type)
             {
                 case TokenType.Plus:
+                {
+                    return left switch
                     {
-                        if (left is double && right is double)
-                            return (double)left + (double)right;
-
-                        if (left is string && right is string)
-                            return (string)left + (string)right;
-
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
-
-                    }
+                        double d when right is double d1 => d + d1,
+                        string s when right is string s1 => s + s1,
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
+                }
 
                 case TokenType.Minus:
                     {
@@ -73,55 +64,51 @@ namespace NephriteRunner.Runtime
                     return !IsEqual(left, right);
 
                 case TokenType.Greater:
+                {
+                    return left switch
                     {
-                        if (left is double && right is double)
-                            return (double)left > (double)right;
-
-                        if (left is string && right is string)
-                            return ((string)left).Length > ((string)right).Length;
-
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
-                    }
+                        double d when right is double d1 => d > d1,
+                        string s when right is string s1 => s.Length > s1.Length,
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
+                }
 
                 case TokenType.GreaterEqual:
+                {
+                    return left switch
                     {
-                        if (left is double && right is double)
-                            return (double)left >= (double)right;
-
-                        if (left is string && right is string)
-                            return ((string)left).Length >= ((string)right).Length;
-
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
-                    }
+                        double d when right is double d1 => d >= d1,
+                        string s when right is string s1 => s.Length >= s1.Length,
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
+                }
 
                 case TokenType.Less:
+                {
+                    return left switch
                     {
-                        if (left is double && right is double)
-                            return (double)left < (double)right;
-
-                        if (left is string && right is string)
-                            return ((string)left).Length < ((string)right).Length;
-
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
-                    }
+                        double d when right is double d1 => d < d1,
+                        string s when right is string s1 => s.Length < s1.Length,
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
+                }
 
                 case TokenType.LessEqual:
+                {
+                    return left switch
                     {
-                        if (left is double && right is double)
-                            return (double)left <= (double)right;
-
-                        if (left is string && right is string)
-                            return ((string)left).Length <= ((string)right).Length;
-
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
-                    }
+                        double d when right is double d1 => d <= d1,
+                        string s when right is string s1 => s.Length <= s1.Length,
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
+                }
                 case TokenType.Modulo:
-                    if (left is double && right is double)
-                        return (double) left % (double) right;
-                    if (left is string && right is string)
-                        return Int32.Parse((string)left) % Int32.Parse((string)right);
-                    else
-                        throw new RuntimeErrorException("Operands must be two numbers or two strings.");
+                    return left switch
+                    {
+                        double d when right is double d1 => d % d1,
+                        string s when right is string s1 => int.Parse(s) % int.Parse(s1),
+                        _ => throw new RuntimeErrorException("Operands must be two numbers or two strings.")
+                    };
             }
 
             throw new RuntimeErrorException("Unknown operator.");
@@ -149,7 +136,7 @@ namespace NephriteRunner.Runtime
             throw new RuntimeErrorException("Unknown operator.");
         }
 
-        public object VisitVariableExpression(Variable variable)
+        public object? VisitVariableExpression(Variable variable)
             => environment.Get(variable.Name);
 
         public object VisitAssignExpression(Assign assign)
@@ -202,14 +189,18 @@ namespace NephriteRunner.Runtime
         {
             var value = Evaluate(write.Expression);
 
-            if (value is null)
-                Console.Write("null");
-
-            else if (value is double)
-                Console.Write(value.ToString());
-
-            else
-                Console.Write(value);
+            switch (value)
+            {
+                case null:
+                    Console.Write("null");
+                    break;
+                case double:
+                    Console.Write(value.ToString());
+                    break;
+                default:
+                    Console.Write(value);
+                    break;
+            }
 
             return write;
         }
@@ -218,14 +209,18 @@ namespace NephriteRunner.Runtime
         {
             var value = Evaluate(writeLine.Expression);
 
-            if (value is null)
-                Console.WriteLine("null");
-
-            else if (value is double)
-                Console.WriteLine(value.ToString());
-
-            else
-                Console.WriteLine(value);
+            switch (value)
+            {
+                case null:
+                    Console.WriteLine("null");
+                    break;
+                case double:
+                    Console.WriteLine(value.ToString());
+                    break;
+                default:
+                    Console.WriteLine(value);
+                    break;
+            }
 
             return writeLine;
         }
@@ -236,7 +231,7 @@ namespace NephriteRunner.Runtime
 
             if (value is null)
                 Environment.Exit(0);
-            else if (value is double || value is bool)
+            else if (value is double or bool)
                 Environment.Exit(Convert.ToInt32(value));
             else
                 throw new RuntimeErrorException("Statement 'exit' requires 'int' exit code.");
@@ -275,7 +270,7 @@ namespace NephriteRunner.Runtime
             {
                 this.environment = environment;
 
-                foreach (Statement statement in statements)
+                foreach (var statement in statements)
                     Execute(statement);
             }
             finally
@@ -287,30 +282,30 @@ namespace NephriteRunner.Runtime
         private void Execute(Statement statement)
             => statement.Accept(this);
 
-        private bool IsTruthy(object value)
+        private static bool IsTruthy(object? value)
         {
             if (value == null)
                 return false;
 
-            return value is bool ? (bool)value : true;
+            return value is not bool b || b;
         }
 
-        private bool IsEqual(object left, object right)
+        private static bool IsEqual(object? left, object? right)
         {
-            if (left == null && left == null)
-                return true;
-
-            if (left == null)
-                return false;
-
-            return left.Equals(right);
+            return left switch
+            {
+                null when right == null => true,
+                null => false,
+                _ => left.Equals(right)
+            };
         }
 
         private void CheckNumberOperands(Token @operator, params object[] operands)
         {
-            foreach (var item in operands)
-                if (item is not double)
-                    throw new RuntimeErrorException($"Operands must be a number ({@operator.Type})");
+            if (operands.Any(item => item is not double))
+            {
+                throw new RuntimeErrorException($"Operands must be a number ({@operator.Type})");
+            }
         }
     }
 }

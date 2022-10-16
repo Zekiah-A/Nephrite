@@ -1,7 +1,7 @@
-﻿using NephriteRunner.Lexer;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Nephrite.Lexer;
 
-namespace NephriteRunner.SyntaxAnalysis
+namespace Nephrite.SyntaxAnalysis
 {
     internal abstract record Statement()
     {

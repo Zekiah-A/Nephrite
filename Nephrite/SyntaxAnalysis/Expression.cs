@@ -1,6 +1,6 @@
-﻿using NephriteRunner.Lexer;
+﻿using Nephrite.Lexer;
 
-namespace NephriteRunner.SyntaxAnalysis
+namespace Nephrite.SyntaxAnalysis
 {
     internal abstract record Expression()
     {
